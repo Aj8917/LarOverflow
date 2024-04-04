@@ -46,7 +46,7 @@
                 <div class="card-header">
                 <div class="d-flex"align-items-center>   
                   <h2> All Questions </h2>
-                   <div class="ml-auto">
+                   <div class="ms-auto">
                     <a href="{{route('questions.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
                    </div>
                 </div>
@@ -68,7 +68,19 @@
                                 </div>                            
                             </div>
                             <div class="media-body">
-                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                               
+                            <div class="d-flex align-items-center">
+                                 <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                          
+                                <div class="ms-auto">
+                                    <a href="{{route('questions.edit',$question->id)}}"
+                                       class="btn btn-sm btn-outline-info">
+                                       Edit
+                                    </a>
+                                </div>
+                            </div>
+                               
+                               
                                 <p class="lead">
                                     Asked by 
                                     <a href="{{ $question->user->url }}">{{ $question->user->name }}</a> 

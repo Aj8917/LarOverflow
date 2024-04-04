@@ -75,6 +75,8 @@ $user->questions()->create($request->all());
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        return redirect('/questions')->with('success',"Your Questions has been removed !");
     }
 }

@@ -6,20 +6,22 @@ use App\Http\Requests\AskQuestionRequest;
 use App\Models\Question;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Gate;
 class QuestionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+        
     public function index()
     {
         //\DB::enableQueryLog();
         $questions = Question::with('user')->latest()->paginate(10);
-        return view('questions.index',compact('questions'))->render();
+        return view('questions.index', compact('questions'))->render();
         //view('questions.index',compact('questions'))->render();
 
-       // dd(\DB::getQueryLog());
+        // dd(\DB::getQueryLog());
     }
 
     /**
@@ -29,7 +31,7 @@ class QuestionsController extends Controller
     {
         $question = new Question();
 
-        return view('questions.create',compact('question'));
+        return view('questions.create', compact('question'));
     }
 
     /**
@@ -37,11 +39,16 @@ class QuestionsController extends Controller
      */
     public function store(AskQuestionRequest $request)
     {
-        $user = $request->user();
+        //if(Auth::check()){
+            $user = $request->user();
 
-// Create a new question associated with the user
-$user->questions()->create($request->all());
-        return redirect()->route('questions.index')->with('success','Question is Submited !');
+            // Create a new question associated with the user
+            $user->questions()->create($request->all());
+            return redirect()->route('questions.index')->with('success', 'Question is Submited !');
+        // }
+        // else{
+        //     abort('403',"Login First");
+        // }
     }
 
     /**
@@ -51,7 +58,7 @@ $user->questions()->create($request->all());
     {
         $question->increment('views');
 
-        return view('questions.show',compact('question'));
+        return view('questions.show', compact('question'));
     }
 
     /**
@@ -59,7 +66,12 @@ $user->questions()->create($request->all());
      */
     public function edit(Question $question)
     {
-     return view("questions.edit",compact('question'));
+
+        Gate::authorize('update', $question);
+        // if (\Gate::denies('update-question', $question)) {
+        //     abort(403, "Sorry Mate !Access Denied");
+        // }
+        return view("questions.edit", compact('question'));
     }
 
     /**
@@ -67,9 +79,10 @@ $user->questions()->create($request->all());
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
-        $question->update($request->only('title','body'));
+        Gate::authorize('update',$question);
+        $question->update($request->only('title', 'body'));
 
-        return redirect('/questions')->with('success','Your Questions Has Been Updated!');
+        return redirect('/questions')->with('success', 'Your Questions Has Been Updated!');
     }
 
     /**
@@ -77,8 +90,12 @@ $user->questions()->create($request->all());
      */
     public function destroy(Question $question)
     {
+        Gate::authorize('delete',$question);
+        // if (\Gate::denies('delete-question', $question)) {
+        //     abort(403, "Sorry Mate ! Access Denied");
+        // }
         $question->delete();
 
-        return redirect('/questions')->with('success',"Your Questions has been removed !");
+        return redirect('/questions')->with('success', "Your Questions has been removed !");
     }
 }

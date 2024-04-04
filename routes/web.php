@@ -17,7 +17,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::resource('questions', QuestionsController::class)->except('show');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('questions', QuestionsController::class)->except( 'show');
+});
+
+Route::get('questions', [QuestionsController::class, 'index'])->name('questions.index');
+
 Route::get('/questions/{slug}',[QuestionsController::class,'show'])->name('questions.show');
 
 require __DIR__.'/auth.php';

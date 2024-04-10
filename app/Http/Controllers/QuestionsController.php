@@ -55,9 +55,10 @@ class QuestionsController extends Controller
      * Display the specified resource.
      */
     public function show(Question $question)
-    {
+    { 
+        //dd($question->answers);
         $question->increment('views');
-
+       // dd($question->answers);
         return view('questions.show', compact('question'));
     }
 

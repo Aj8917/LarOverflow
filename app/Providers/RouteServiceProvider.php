@@ -20,10 +20,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::bind('slug',function($slug)
-        {
-            $question=Question::where('slug',$slug)->firstOrFail();
-            return $question?$question:abort(404);
+        // parent::boot();
+
+        Route::bind('slug', function ($slug) {
+            // Retrieve the question with answers and user eager loaded
+            $question = Question::with('answers.user')->where('slug', $slug)->first();
+    
+            // If the question doesn't exist, return a 404 response
+            if (!$question) {
+                abort(404);
+            }
+    
+            return $question;
         });
     }
 }

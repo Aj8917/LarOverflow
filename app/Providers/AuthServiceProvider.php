@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Policies\QuestionPolicy;
 use App\Models\Question;
-
+use App\Answer;
+use App\Policies\AnswerPolicy;
 class AuthServiceProvider extends ServiceProvider
 {
     /**

@@ -42,5 +42,5 @@ form.form-delete{
   }
   
   .vote-controls a.vote-accepted {
-    color: #28a745;
+    color: #28a745 !important; 
   }

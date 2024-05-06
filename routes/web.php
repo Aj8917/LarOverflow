@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionsController;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,5 @@ Route::get('/questions/{slug}',[QuestionsController::class,'show'])->name('quest
 // Route::post('/questions/{question}/answers', 'AnswersController@store')->name('answers.store');
 Route::resource('questions.answers', AnswersController::class)->except(['index', 'create', 'show']);
 
+Route::post('/answer/{answer}/accept',AcceptAnswerController::class)->name('answer.accept');
 require __DIR__.'/auth.php';

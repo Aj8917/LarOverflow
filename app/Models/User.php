@@ -59,4 +59,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Answer::class);
     }
-}
+
+    public function getAvatarAttribute(){
+        $email=$this->email;
+        $size =32;
+
+        return "https://www.gravater.com/avatar".md5(strtolower(trim($email)));
+    } 
+
+    public function favorites(){
+        return $this->belongsToMany(Question::class,'favorites')->withTimestamps();
+    } 
+
+}//User

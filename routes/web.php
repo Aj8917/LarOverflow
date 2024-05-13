@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\FavouritesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AnswersController;
@@ -33,4 +34,12 @@ Route::get('/questions/{slug}',[QuestionsController::class,'show'])->name('quest
 Route::resource('questions.answers', AnswersController::class)->except(['index', 'create', 'show']);
 
 Route::post('/answer/{answer}/accept',AcceptAnswerController::class)->name('answer.accept');
+
+Route::middleware('auth')->group(function () {
+Route::post('/questions/{question}/favorites',[FavouritesController::class,'store'])
+        ->name('questions.favorite');
+ Route::delete('/questions/{question}/favorites',[FavouritesController::class,'destory'])
+        ->name('questions.unfavorite');
+
+});
 require __DIR__.'/auth.php';

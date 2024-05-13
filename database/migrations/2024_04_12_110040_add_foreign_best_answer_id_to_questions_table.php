@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('questions', function (Blueprint $table) {
-           
+            if (!Schema::hasColumn('questions', 'best_answer_id')) {
                 $table->unsignedBigInteger('best_answer_id')->nullable();
                 $table->foreign('best_answer_id')
                       ->references('id')
                       ->on('answers')
                       ->onDelete('SET NULL');
-            
+            }
         });
     }
 

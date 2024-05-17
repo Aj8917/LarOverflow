@@ -5,8 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\FavouritesController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\VoteQuestionController;
 use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\VoteAnswerController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -40,6 +41,8 @@ Route::post('/questions/{question}/favorites',[FavouritesController::class,'stor
         ->name('questions.favorite');
  Route::delete('/questions/{question}/favorites',[FavouritesController::class,'destory'])
         ->name('questions.unfavorite');
-
+ 
+Route::post('/questions/{question}/vote', VoteQuestionController::class);
+Route::post('/answers/{answer}/vote', VoteAnswerController::class);
 });
 require __DIR__.'/auth.php';

@@ -25,8 +25,8 @@ class QuestionFactory extends Factory
             'title' => rtrim($faker->sentence($faker->numberBetween(5, 10)), '.'),
             'body' => $faker->paragraphs($faker->numberBetween(3, 7), true),
             'views' => $faker->numberBetween(0, 10),
-            'answers_count' => $faker->numberBetween(0, 10),
-            'votes' => $faker->numberBetween(-3, 10)
+           // 'answers_count' => $faker->numberBetween(0, 10),
+            //'votes_count' => $faker->numberBetween(-3, 10)
         ];
     }
 }

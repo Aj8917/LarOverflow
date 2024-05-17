@@ -50,7 +50,7 @@
                         <div class="media">
                             <div class="d-flex flex-column counters">
                                 <div class="vote">
-                                    <strong>{{ $question->votes }}</strong> {{ Str::plural('vote', $question->votes) }}
+                                    <strong>{{ $question->votes_count }}</strong> {{ Str::plural('votes_count', $question->votes) }}
                                 </div>
                                 <div class="status {{ $question->status }}">
                                     <strong>{{ $question->answers_count  }}</strong>
